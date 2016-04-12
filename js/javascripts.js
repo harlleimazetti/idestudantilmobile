@@ -32,7 +32,7 @@ $(document).on("click", ".tabela_home tr td", function() {
 
 $(document).on( "click" , "#btn-pesquisar-matricula", function () {
 	$.mobile.loading( "show", {
-		text: "Atualizando...",
+		text: "Pesquisando...",
 		textVisible: true,
 		theme: "b",
 		html: ""
@@ -54,6 +54,9 @@ $(document).on( "click" , "#btn-pesquisar-matricula", function () {
 						//handler(this.response);
 						//console.log(this.response, typeof this.response);
 						var img = document.getElementById('img_carteira');
+						var url = window.URL || window.webkitURL;
+						img.src = url.createObjectURL(this.response);
+						var img = document.getElementById('img_carteira_b');
 						var url = window.URL || window.webkitURL;
 						img.src = url.createObjectURL(this.response);
 					}
@@ -81,23 +84,32 @@ $(document).on('pagebeforeshow', '#resultado', function()
 	$('.carteira_nome').html(resultado.carteira[0].nome);
 	$('.carteira_colegio').html(resultado.carteira[0].colegio);
 	$('.carteira_matricula').html(resultado.carteira[0].matricula);
-	$('#icon_resultado').removeClass('fa-check');
-	$('#icon_resultado').removeClass('fa-close');
-	$('#icone_resultado').removeClass('icon-background-valido');
-	$('#icone_resultado').removeClass('icon-background-invalido');
+	$('.carteira_numero').html(resultado.carteira[0].numero);
+	$('.carteira_nascimento').html(resultado.carteira[0].nascimento);
+	$('.carteira_posto_atendimento').html(resultado.carteira[0].posto_atendimento);
+	$('.carteira_obs').html(resultado.carteira[0].obs);
+	$('.carteira_curso_turma').html(resultado.carteira[0].curso_turma);
+	$('.icon_resultado').removeClass('fa-check');
+	$('.icon_resultado').removeClass('fa-close');
+	$('.icone_resultado').removeClass('icon-background-valido');
+	$('.icone_resultado').removeClass('icon-background-invalido');
+	$('.row_resultado').removeClass('clr-bg-green');
+	$('.row_resultado').removeClass('clr-bg-red');
 	if (resultado.status == 'er') {
-		$('#icon_resultado').addClass('fa-close');
-		$('#icone_resultado').addClass('icon-background-invalido');
+		$('.icon_resultado').addClass('fa-close');
+		$('.icone_resultado').addClass('icon-background-invalido');
+		$('.row_resultado').addClass('clr-bg-red');
 	} else {
-		$('#icon_resultado').addClass('fa-check');
-		$('#icone_resultado').addClass('icon-background-valido');
+		$('.icon_resultado').addClass('fa-check');
+		$('.icone_resultado').addClass('icon-background-valido');
+		$('.row_resultado').addClass('clr-bg-green');
 	}
 	$('.carteira_mensagem').html(resultado.mensagem);
 });
 
 function sincronizar() {
 	$.mobile.loading( "show", {
-		text: "Atualizando...",
+		text: "Pesquisando...",
 		textVisible: true,
 		theme: "b",
 		html: ""
